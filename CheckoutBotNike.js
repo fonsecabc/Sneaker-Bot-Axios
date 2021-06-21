@@ -22,8 +22,8 @@ function login()
         method: 'post',
         url: url_login,
         data: {
-            username: "gmail@gmail.com", 
-            password: "password"
+            username: "gmail@gmail.com", //nike username
+            password: "password" //password
         },
         headers: {
             'Accept-Language': 'en-en-US,en;q=0.9,en',
@@ -78,20 +78,19 @@ function payment()
         method: 'post',
         url: url_payment,
         data: {
-            address1: "8910 Legacy Ct",
-            address2: "208",
-            city: "Kissimmee",
+            address1: "1234 Street Blvd", 
+            address2: "123",
+            city: "MyCity",
             country: "US",
-            email: "caiobragadafonseca@gmail.com",
-            firstName: "Caio",
-            lastName: "Fonseca",
-            phoneNumber: "(321) 443-7972",
-            postalCode: "34747",
+            email: "gmail@gmail.com",
+            firstName: "Name",
+            lastName: "LastName",
+            phoneNumber: "(123) 456-7890",
+            postalCode: "12345",
             state: "FL",
-            creditCardInfoId: "5afc5970-2507-45de-b41b-3f729e1bebd2",
             expiryMonth: "06",
             expiryYear: "2027",
-            acountNumber: "5313671938347761",
+            acountNumber: "1234567812345678",
 
         },
         headers: {
