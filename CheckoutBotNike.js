@@ -117,8 +117,6 @@ function placeOrder()
         method: 'post',
         url: url_placeorder,
         data: {
-            checkoutId: "8239c258-cc15-474c-8f57-de3121ee1d8f",
-            anonymousId: "926499C685684F7056EB4DB7D0A126AF",
             event: 'Placed-Order'
         },
         headers: {
