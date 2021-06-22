@@ -117,7 +117,8 @@ function placeOrder()
         method: 'post',
         url: url_placeorder,
         data: {
-            event: 'Placed-Order'
+            event: 'Placed-Order',
+            checkoutid: ''
         },
         headers: {
             'Accept-Language': 'en-en-US,en;q=0.9,en',
