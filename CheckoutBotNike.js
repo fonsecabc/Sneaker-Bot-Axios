@@ -1,13 +1,10 @@
 var http = require('http');
 
-function createServer()
-{
-    //create a server object:
-    http.createServer(function (req, res) {
-        res.write('Hello World!'); //write a response to the client
-        res.end(); //end the response
-    }).listen(8080); //the server object listens on port 8080
-}
+//create a server object:
+http.createServer(function (req, res) {
+    res.write('Hello World!'); //write a response to the client
+    res.end(); //end the response
+}).listen(8080); //the server object listens on port 8080
 
 const axios = require('axios');
 
@@ -16,14 +13,13 @@ const url_addtocart = 'https://analytics.nike.com/v1/t';
 const url_payment = 'https://api.nike.com/payment/preview/v3';
 const url_placeorder = 'https://analytics.nike.com/v1/t';
 
-function login()
-{
+let login = new Promise((resolve, reject) => {
     axios({
         method: 'post',
         url: url_login,
         data: {
-            username: "gmail@gmail.com", //nike username
-            password: "password" //password
+            username: gmail, 
+            password: password
         },
         headers: {
             'Accept-Language': 'en-en-US,en;q=0.9,en',
@@ -36,15 +32,15 @@ function login()
     })
     .then ((response) => {
         console.log('Logged in with success!');
-        console.log(response);
+        resolve()
     }, (error) => {
         console.log(error);
-        console.log('Error, bot was detected or something else.');  
+        console.log('Error, bot was detected or something else.')
+        reject();
     });
-}
+});
 
-function addToCart()
-{
+let addToCart = new Promise((resolve, reject) => {
     axios({
         method: 'post',
         url: url_addtocart,
@@ -64,33 +60,33 @@ function addToCart()
         }
     })
     .then ((response) => {
-        console.log('Shoe added to cart!');
-        console.log(response);
+        console.log('Added to cart with succes');
+        resolve()
     }, (error) => {
         console.log(error);
-        console.log('Error, bot was detected or something else.');  
+        console.log('Error, bot was detected or something else.')
+        reject();
     });
-}
+});
 
-function payment()
-{
+let payment = new Promise((resolve, reject) => {
     axios({
         method: 'post',
         url: url_payment,
         data: {
-            address1: "1234 Street Blvd", 
-            address2: "123",
-            city: "MyCity",
-            country: "US",
-            email: "gmail@gmail.com",
-            firstName: "Name",
-            lastName: "LastName",
-            phoneNumber: "(123) 456-7890",
-            postalCode: "12345",
-            state: "FL",
-            expiryMonth: "06",
-            expiryYear: "2027",
-            acountNumber: "1234567812345678",
+            address1: address1,
+            address2: address2,
+            city: city,
+            country: country,
+            email: email,
+            firstName: firstName,
+            lastName: lastName,
+            phoneNumber: phoneNumber,
+            postalCode: postalCode,
+            state: state,
+            expiryMonth: expiryMonth,
+            expiryYear: expiryYear,
+            acountNumber: acountNumber,
 
         },
         headers: {
@@ -104,21 +100,19 @@ function payment()
     })
     .then ((response) => {
         console.log('Payment made!');
-        console.log(response);
+        resolve();
     }, (error) => {
         console.log(error);
         console.log('Error, bot was detected or something else.');  
+        reject();
     });
-}
+});
 
-function placeOrder()
-{
+let placeOrder = new Promise((resolve, reject) => {
     axios({
         method: 'post',
         url: url_placeorder,
         data: {
-            event: 'Placed-Order',
-            checkoutid: ''
         },
         headers: {
             'Accept-Language': 'en-en-US,en;q=0.9,en',
@@ -131,13 +125,20 @@ function placeOrder()
     })
     .then ((response) => {
         console.log('Order Placed!');
+        resolve();
     }, (error) => {
         console.log(error);
         console.log('Error, bot was detected or something else.');  
+        reject();
     });
-}
+});
 
-createServer();
-login();
-addToCart();
-payment();
+login.then(() => {
+    addToCart.then(() => {
+        payment.then(() => {
+            placeOrder.then(() => {
+                console.log('Everything done with success!')
+            })
+        })
+    })
+})
